@@ -11,7 +11,7 @@ def attach_wrapper(obj, func=None):
     return func
 
 
-def logger(level, name=None, message=None):
+def logger(level=logging.ERROR, name=None, message=None):
 
     def decorate(func):
         logname = name if name else func.__module__
@@ -50,11 +50,18 @@ def spam():
     print('Spam!')
 
 
+# 9.6 装饰器不带参数会报错
+@logger  # TypeError: decorate() takes 1 positional argument but 2 were given
+def add2(x, y):
+    print(x + y)
+    return x + y
+
+
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.ERROR)
     add(2, 3)
-    add.set_level(logging.CRITICAL)
-    add(3, 4)
-    add.set_message('err')
-    add(4, 5)
+    add2(2, 3)
+    # add.set_level(logging.CRITICAL)
+    # add(3, 4)
+    # add.set_message('err')
+    # add(4, 5)
 
